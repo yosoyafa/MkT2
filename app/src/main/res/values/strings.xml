@@ -1,0 +1,132 @@
+<resources>
+    <string name="app_name">MkT2</string>
+    <string name="descargarInfo">Descargar</string>
+    <string name="centrosComerciales">Centros Comerciales</string>
+    <string name="sync">Sincronizar</string>
+    <string name="historial">Historial</string>
+
+    <string-array name="categoria">
+        <item>Moda, Muebles y Enseres</item>
+        <item>Bienes y  Servicios de Conveniencia</item>
+        <item>Otras Categorías</item>
+        <item>Entretenimiento</item>
+        <item>Vehículos y Serviteca</item>
+        <item>Disponible</item>
+    </string-array>
+
+    <string-array name="subcategoria1">
+        <item>Moda</item>
+        <item>Muebles y Enseres</item>
+        <item>Departamental</item>
+    </string-array>
+
+    <string-array name="subcategoria2">
+        <item>Supermercado</item>
+        <item>Comidas y Bebidas</item>
+        <item>Cuidado Personal</item>
+        <item>Servicios</item>
+    </string-array>
+
+    <string-array name="subcategoria3">
+        <item>Otras Categorías</item>
+    </string-array>
+
+    <string-array name="subcategoria5">
+        <item>Entretenimiento</item>
+    </string-array>
+
+    <string-array name="subcategoria10">
+        <item>Vehículos y Serviteca</item>
+    </string-array>
+
+    <string-array name="subcategoria11">
+        <item>Disponible</item>
+    </string-array>
+
+    <string-array name="tipobien1_1">
+        <item>Ropa para damas</item>
+        <item>Ropa para hombres</item>
+        <item>Ropa para niños</item>
+        <item>Ropa interior</item>
+        <item>Calzado para dama</item>
+        <item>Calzado para hombre</item>
+        <item>Calzado para niños</item>
+        <item>Ropa y Calzado Deportivo</item>
+        <item>Accesorios</item>
+        <item>Calzado para la Familia</item>
+        <item>Ropa para la Familia</item>
+    </string-array>
+
+    <string-array name="tipobien1_3">
+        <item>Sala, Comedor y Alcoba</item>
+        <item>Equipo de iluminación y decoración</item>
+        <item>Electrodomésticos</item>
+        <item>Video, Sonido y Tecnologia</item>
+        <item>Utensilios domésticos</item>
+        <item>Ropa de Hogar</item>
+        <item>Mejoras y cuidado para el hogar</item>
+        <item>Artículos y productos para el hogar</item>
+    </string-array>
+
+    <string-array name="tipobien1_4">
+        <item>Departamental</item>
+    </string-array>
+
+    <string-array name="tipobien2_1">
+        <item>Supermercado</item>
+    </string-array>
+
+    <string-array name="tipobien2_2">
+        <item>Restaurantes a mantel</item>
+        <item>Comida informal</item>
+        <item>Panadería y Pasteleria</item>
+        <item>Cafe, Postres y Helados</item>
+        <item>Bares</item>
+    </string-array>
+
+    <string-array name="tipobien2_3">
+        <item>Farmacia</item>
+        <item>Gimnasio</item>
+        <item>Salones de Belleza</item>
+        <item>Cafe, Postres y Helados</item>
+    </string-array>
+
+    <string-array name="tipobien2_4">
+        <item>Servicios para mascotas</item>
+        <item>Servicios y equipos de tecnología</item>
+        <item>Servicio de Lavanderia</item>
+        <item>Reparacion de Vestuario</item>
+        <item>Reparacion de Calzado</item>
+        <item>Servicio de Mensajería</item>
+        <item>Turismo, tiquetes aereos y terrestres</item>
+        <item>Servicios financieros</item>
+        <item>Otros servicios</item>
+    </string-array>
+
+    <string-array name="tipobien3_5">
+        <item>Librería, textos y papelería</item>
+        <item>Artículos Deportivos</item>
+        <item>Joyerías y relojerías</item>
+        <item>Juguetería</item>
+        <item>Serv. Médicos (consultas, laboratorio, imágenes)</item>
+        <item>Fotografia</item>
+        <item>Otras categorías</item>
+    </string-array>
+
+    <string-array name="tipobien5_1">
+        <item>Cine</item>
+        <item>Bolera</item>
+        <item>Parque infantil</item>
+        <item>Juegos de azar /casino</item>
+        <item>Cancha Sintetica</item>
+    </string-array>
+
+    <string-array name="tipobien10_1">
+        <item>Vehículos / Motos</item>
+        <item>Servicios de Serviteca</item>
+    </string-array>
+
+    <string-array name="tipobien11_1">
+        <item>Disponible</item>
+    </string-array>
+</resources>
