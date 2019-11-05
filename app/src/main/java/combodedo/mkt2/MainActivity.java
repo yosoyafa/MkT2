@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import model.Local;
 import utils.ConexionHTTP;
+import utils.DataBase;
 import utils.LogicDataBase;
 
 public class MainActivity extends AppCompatActivity {
@@ -144,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
                     Local local = new Local(nombre,numeroLocal,area,codigoCategoria,codigoSubcategoria,codigoBien,centroComercial);
                     db.addLocal(local);
                 }
+
                 //Toast.makeText(this, "Descarga completa",
                 //        Toast.LENGTH_LONG).show();
                 return 1;

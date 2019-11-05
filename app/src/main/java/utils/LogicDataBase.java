@@ -16,7 +16,7 @@ import model.Local;
 public class LogicDataBase extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "BaseDeDatos.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     public LogicDataBase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -30,7 +30,7 @@ public class LogicDataBase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        sqLiteDatabase.execSQL("ALTER TABLE " + DataBase.TABLE_LOCALES + " ADD COLUMN " + DataBase.DataLocalColumns.LOCAL_GESTIONADO + " TEXT NOT NULL DEFAULT '-'");
     }
 
     public String getTableAsString(String tableName) {
@@ -57,17 +57,11 @@ public class LogicDataBase extends SQLiteOpenHelper {
         if (db != null){
             ContentValues values = new ContentValues();
             values.put(DataBase.DataLocalColumns.LOCAL_NOMBRE, local.getNombre());
-            //values.put(DataBase.DataLocalColumns.LOCAL_NIT, local.getNit());
             values.put(DataBase.DataLocalColumns.LOCAL_NUMERO, local.getNumero());
             values.put(DataBase.DataLocalColumns.LOCAL_AREA, local.getArea());
-            values.put(DataBase.DataLocalColumns.LOCAL_TIPO, local.getTipo());
-            values.put(DataBase.DataLocalColumns.LOCAL_TIPOBIEN, local.getTipoBien());
             values.put(DataBase.DataLocalColumns.LOCAL_CODIGOCATEGORIA, local.getCodigoCategoria());
-            values.put(DataBase.DataLocalColumns.LOCAL_CATEGORIA, local.getCategoria());
             values.put(DataBase.DataLocalColumns.LOCAL_CODIGOSUBCATEGORIA, local.getCodigoSubcategoria());
-            values.put(DataBase.DataLocalColumns.LOCAL_SUBCATEGORIA, local.getSubcategoria());
             values.put(DataBase.DataLocalColumns.LOCAL_CODIGOBIEN, local.getCodigoBien());
-            values.put(DataBase.DataLocalColumns.LOCAL_DESCRIPCIONBIEN, local.getDescripcionBien());
             values.put(DataBase.DataLocalColumns.LOCAL_CENTROCOMERCIAL, local.getCentroComercial());
             values.put(DataBase.DataLocalColumns.LOCAL_GESTIONADO, local.getGestionado());
             db.insert(DataBase.TABLE_LOCALES, null, values);
@@ -98,23 +92,27 @@ public class LogicDataBase extends SQLiteOpenHelper {
         //Donde esta que la tabla sea locales, o como from locales
         try{
             //Cursor cursor = db.query(DataBase.TABLE_LOCALES,columns,columns[11] + "="+centroComercial,null,null,null,null);
-            Cursor cursor = db.rawQuery("SELECT nombre, numero, area, tipo, tipoBien, codigoCategoria, categoria, codigoSubcategoria, subcategoria, codigoBien, descripcionBien, centroComercial FROM locales WHERE centroComercial='"+centroComercial+"'", null);
+            Cursor cursor = db.rawQuery("SELECT key_id, nombre, numero, area, tipo, tipoBien, codigoCategoria, categoria, codigoSubcategoria, subcategoria, codigoBien, descripcionBien, centroComercial, gestionado FROM locales WHERE centroComercial='"+centroComercial+"'", null);
             if(cursor.moveToFirst()){
                 while(!cursor.isAfterLast()){
                     String nom = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_NOMBRE));
                     String num = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_NUMERO));
                     String area = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_AREA));
-                    String tipo = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_TIPO));
-                    String tipoBien = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_TIPOBIEN));
+                    //String tipo = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_TIPO));
+                    //String tipoBien = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_TIPOBIEN));
                     String codCat = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_CODIGOCATEGORIA));
-                    String cat = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_CATEGORIA));
+                    //String cat = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_CATEGORIA));
                     String codSub = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_CODIGOSUBCATEGORIA));
-                    String sub = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_SUBCATEGORIA));
+                    //String sub = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_SUBCATEGORIA));
                     String codBien = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_CODIGOBIEN));
-                    String descripBien = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_DESCRIPCIONBIEN));
+                    //String descripBien = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_DESCRIPCIONBIEN));
                     String cc = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_CENTROCOMERCIAL));
+                    String gestionado = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_GESTIONADO));
+                    int key = cursor.getInt(cursor.getColumnIndex("key_id"));
 
-                    Local l = new Local(nom,num,area,tipo,tipoBien,codCat,cat,codSub,sub,codBien,descripBien,cc);
+                    //Local l = new Local(nom,num,area,tipo,tipoBien,codCat,cat,codSub,sub,codBien,descripBien,cc);
+
+                    Local l = new Local(key,nom, num, area, codCat, codSub, codBien, cc, gestionado);
 
                     localesCentroComercial.add(l);
                     cursor.moveToNext();
@@ -178,7 +176,6 @@ public class LogicDataBase extends SQLiteOpenHelper {
     public ArrayList<String> getCCs(){
 
         SQLiteDatabase db = this.getReadableDatabase();
-        //Cursor cursor = null;
         ArrayList<String> ccs = new ArrayList<String>();
         try {
             Cursor cursor = db.rawQuery("select distinct "+ DataBase.DataLocalColumns.LOCAL_CENTROCOMERCIAL + " from "+DataBase.TABLE_LOCALES, null);
@@ -192,10 +189,6 @@ public class LogicDataBase extends SQLiteOpenHelper {
             cursor.close();
         }catch(Exception e){
             e.printStackTrace();
-        }
-        if(ccs.isEmpty()){
-            Local local = new Local("Claro", "216", "127.00", "2", "4", "2", "DIVERPLAZA", "0");
-            addLocal(local);
         }
         return ccs;
 

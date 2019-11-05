@@ -8,26 +8,28 @@ public class DataBase {
     public static final String TABLE_GESTION = "gestion";
 
 
-    public static final String SQL_CREATE_TABLE_LOCALESCOMERCIALES = "CREATE TABLE "
+    public static final String SQL_CREATE_TABLE_LOCALESCOMERCIALES = "CREATE TABLE IF NOT EXISTS "
             + DataBase.TABLE_LOCALES + " ("
             + "key_id INTEGER PRIMARY KEY AUTOINCREMENT,"
             + DataLocalColumns.LOCAL_NOMBRE + " TEXT,"
             + DataLocalColumns.LOCAL_NUMERO + " TEXT,"
             + DataLocalColumns.LOCAL_AREA + " TEXT,"
             + DataLocalColumns.LOCAL_TIPO + " TEXT,"
-            //+ DataLocalColumns.LOCAL_NIT + " TEXT,"
-            + DataLocalColumns.LOCAL_TIPOBIEN + " TEXT,"
             + DataLocalColumns.LOCAL_CODIGOCATEGORIA + " TEXT,"
-            + DataLocalColumns.LOCAL_CATEGORIA + " TEXT,"
             + DataLocalColumns.LOCAL_CODIGOSUBCATEGORIA + " TEXT,"
-            + DataLocalColumns.LOCAL_SUBCATEGORIA + " TEXT,"
             + DataLocalColumns.LOCAL_CODIGOBIEN + " TEXT,"
-            + DataLocalColumns.LOCAL_DESCRIPCIONBIEN + " TEXT,"
             + DataLocalColumns.LOCAL_GESTIONADO + " TEXT,"
             + DataLocalColumns.LOCAL_CENTROCOMERCIAL + " TEXT)";
 
+    //+ DataLocalColumns.LOCAL_NIT + " TEXT,"
+    //+ DataLocalColumns.LOCAL_TIPOBIEN + " TEXT,"
+    //+ DataLocalColumns.LOCAL_CATEGORIA + " TEXT,"
+    //+ DataLocalColumns.LOCAL_SUBCATEGORIA + " TEXT,"
+    //+ DataLocalColumns.LOCAL_DESCRIPCIONBIEN + " TEXT,"
+
+
     //TODO
-    public static final String SQL_CREATE_TABLE_GESTION = "CREATE TABLE "
+    public static final String SQL_CREATE_TABLE_GESTION = "CREATE TABLE IF NOT EXISTS "
             + DataBase.TABLE_GESTION + " ("
             + "key_id INTEGER PRIMARY KEY AUTOINCREMENT,"
             + DataGestionColumns.GESTION_LOCALID + " TEXT,"
@@ -43,7 +45,6 @@ public class DataBase {
         public static final String LOCAL_AREA = "area";
         public static final String LOCAL_TIPO = "tipo";
         //public static final String LOCAL_NIT = "nit";
-        public static final String LOCAL_TIPOBIEN = "tipoBien";
         public static final String LOCAL_CODIGOCATEGORIA = "codigoCategoria";
         public static final String LOCAL_CATEGORIA= "categoria";
         public static final String LOCAL_CODIGOSUBCATEGORIA = "codigoSubcategoria";

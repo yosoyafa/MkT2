@@ -2,40 +2,10 @@ package model;
 
 public class Local {
 
-    private String key_id, nombre, numero, area, tipo, tipoBien, codigoCategoria, categoria, codigoSubcategoria, subcategoria, codigoBien, descripcionBien, centroComercial, gestionado;
-
-    public Local(String nombre, String numero, String area, String tipo,  String tipoBien, String codigoCategoria, String categoria, String codigoSubcategoria, String subcategoria, String codigoBien, String descripcionBien, String centroComercial) {
-        this.numero = numero;
-        this.area = area;
-        this.tipo = tipo;
-        this.nombre = nombre;
-        this.tipoBien = tipoBien;
-        this.codigoCategoria = codigoCategoria;
-        this.categoria = categoria;
-        this.codigoSubcategoria = codigoSubcategoria;
-        this.subcategoria = subcategoria;
-        this.codigoBien = codigoBien;
-        this.descripcionBien = descripcionBien;
-        this.centroComercial = centroComercial;
-    }
-
-//    public Local(String nombre, String numero, String area, String tipo, String tipoBien, String codigoCategoria, String codigoSubcategoria, String codigoBien, String centroComercial) {
-//        this.nombre = nombre;
-//        this.numero = numero;
-//        this.area = area;
-//        this.tipo = tipo;
-//        this.tipoBien = tipoBien;
-//        this.codigoCategoria = codigoCategoria;
-//        this.codigoSubcategoria = codigoSubcategoria;
-//        this.codigoBien = codigoBien;
-//        this.centroComercial = centroComercial;
-//        descripcionBien = "-";
-//        setCodigos(codigoCategoria,codigoSubcategoria,codigoBien);
-//    }
-
+    private String nombre, numero, area, tipo, tipoBien, codigoCategoria, categoria, codigoSubcategoria, subcategoria, codigoBien, descripcionBien, centroComercial, gestionado;
+    private int key_id;
 
     public Local(String nombre, String numero, String area, String codigoCategoria, String codigoSubcategoria, String codigoBien, String centroComercial, String gestionado) {
-        this.key_id = key_id;
         this.nombre = nombre;
         this.numero = numero;
         this.area = area;
@@ -57,11 +27,10 @@ public class Local {
         this.centroComercial = centroComercial;
         setCodigos(codigoCategoria,codigoSubcategoria,codigoBien);
         this.gestionado = "0";
-        System.out.println("_____\nCONSTRUCTOR: "+gestionado);
     }
 
 
-    public Local(String key_id, String nombre, String numero, String area, String codigoCategoria, String codigoSubcategoria, String codigoBien, String centroComercial, String gestionado) {
+    public Local(int key_id, String nombre, String numero, String area, String codigoCategoria, String codigoSubcategoria, String codigoBien, String centroComercial, String gestionado) {
         this.key_id = key_id;
         this.nombre = nombre;
         this.numero = numero;
@@ -424,11 +393,11 @@ public class Local {
         this.centroComercial = centroComercial;
     }
 
-    public String getKey_id() {
+    public int getKey_id() {
         return key_id;
     }
 
-    public void setKey_id(String key_id) {
+    public void setKey_id(int key_id) {
         this.key_id = key_id;
     }
 

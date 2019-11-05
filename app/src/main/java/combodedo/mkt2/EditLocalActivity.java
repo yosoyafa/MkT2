@@ -39,7 +39,7 @@ public class EditLocalActivity extends AppCompatActivity {
 
     private void setLocal() {
         String[] loc = getIntent().getStringExtra("local").split(",");
-        local = new Local(loc[0], loc[1], loc[2], loc[3], loc[4], loc[5], loc[6], loc[7], loc[8]);
+        local = new Local(Integer.parseInt(loc[0]), loc[1], loc[2], loc[3], loc[4], loc[5], loc[6], loc[7], loc[8]);
         System.out.println(local.toStringRaw());
     }
 
