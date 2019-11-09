@@ -179,7 +179,7 @@ public class ConexionHTTP {
         }
     }
 
-    public void gestion(String nombreActual, String nombreNuevo, String areaActual, String areaNueva, String categoriaActual, String categoriaNueva, String subcategoriaActual, String subcategoriaNueva, String tipoBienActual, String tipoBienNuevo, String observacion) {
+    public void gestion(String idLocal, String centroComercial, String nombreActual, String nombreNuevo, String areaActual, String areaNueva, String categoriaActual, String categoriaNueva, String subcategoriaActual, String subcategoriaNueva, String tipoBienActual, String tipoBienNuevo, String observacion) {
         try {
             JSONObject post = new JSONObject();
             post.put("nombreActual", nombreActual);
@@ -193,10 +193,8 @@ public class ConexionHTTP {
             post.put("tipoBienActual", tipoBienActual);
             post.put("tipoBienNuevo", tipoBienNuevo);
             post.put("observacion", observacion);
-            if (sede.equals(LLANO)) {
-                System.out.println("URL:" + SERVER + ACTUALIZACION + "nombreActual=" + nombreActual + "&nombreNuevo=" + nombreNuevo + "&areaActual=" + areaActual + "&areaNueva=" + areaNueva + "&categoriaActual=" + categoriaActual + "&categoriaNueva=" + categoriaNueva + "&subcategoriaActual=" + subcategoriaActual + "&subcategoriaNueva=" + subcategoriaNueva + "&tipoBienActual=" + tipoBienActual + "&tipoBienNuevo=" + tipoBienNuevo + "&observacion=" + observacion);
-                new ConectionTask().execute(SERVER + ACTUALIZACION + "nombreActual=" + nombreActual + "&nombreNuevo=" + nombreNuevo + "&areaActual=" + areaActual + "&areaNueva=" + areaNueva + "&categoriaActual=" + categoriaActual + "&categoriaNueva=" + categoriaNueva + "&subcategoriaActual=" + subcategoriaActual + "&subcategoriaNueva=" + subcategoriaNueva + "&tipoBienActual=" + tipoBienActual + "&tipoBienNuevo=" + tipoBienNuevo + "&observacion=" + observacion);
-            }
+            System.out.println("URL:" + SERVER + ACTUALIZACION + "idLocal=" + idLocal + "&centroComercial=" + centroComercial + "&nombreActual=" + nombreActual + "&nombreNuevo=" + nombreNuevo + "&areaActual=" + areaActual + "&areaNueva=" + areaNueva + "&categoriaActual=" + categoriaActual + "&categoriaNueva=" + categoriaNueva + "&subcategoriaActual=" + subcategoriaActual + "&subcategoriaNueva=" + subcategoriaNueva + "&tipoBienActual=" + tipoBienActual + "&tipoBienNuevo=" + tipoBienNuevo + "&observacion=" + observacion);
+            new ConectionTask().execute(SERVER + ACTUALIZACION + "idLocal=" + idLocal + "&centroComercial=" + centroComercial + "&nombreActual=" + nombreActual + "&nombreNuevo=" + nombreNuevo + "&areaActual=" + areaActual + "&areaNueva=" + areaNueva + "&categoriaActual=" + categoriaActual + "&categoriaNueva=" + categoriaNueva + "&subcategoriaActual=" + subcategoriaActual + "&subcategoriaNueva=" + subcategoriaNueva + "&tipoBienActual=" + tipoBienActual + "&tipoBienNuevo=" + tipoBienNuevo + "&observacion=" + observacion);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -118,7 +118,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
-                            android:checked="true"
+                            android:checked="false"
                             android:onClick="onRadioButtonClicked"
                             android:text="Igual" />
 
@@ -127,7 +127,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
-                            android:checked="false"
+                            android:checked="true"
                             android:onClick="onRadioButtonClicked"
                             android:text="Cambió" />
 
@@ -222,12 +222,26 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginEnd="5dp"
-                            android:text="Categoría:"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginEnd="5dp"
+                                android:text="Categoría:" />
+
+                            <TextView
+                                android:id="@+id/tv_sp_cat"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text=" cat" />
+                        </LinearLayout>
 
                         <Spinner
                             android:id="@+id/spinner_categoria"
@@ -244,12 +258,27 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            android:layout_marginStart="20dp"
-                            android:text="Subcategoría:"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginEnd="5dp"
+                                android:text="Subcategoría:" />
+
+                            <TextView
+                                android:id="@+id/tv_sp_subcat"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text=" subcat" />
+                        </LinearLayout>
 
                         <Spinner
                             android:id="@+id/spinner_subcategoria"
@@ -266,12 +295,26 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            android:layout_marginStart="20dp"
-                            android:text="Tipo bien/serv.:"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginEnd="5dp"
+                                android:text="Tipo bien/serv.:" />
+
+                            <TextView
+                                android:id="@+id/tv_sp_bien"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text=" bien" />
+                        </LinearLayout>
 
 
                         <Spinner

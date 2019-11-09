@@ -16,7 +16,7 @@ import model.Local;
 public class LogicDataBase extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "BaseDeDatos.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     public LogicDataBase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -30,7 +30,7 @@ public class LogicDataBase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("ALTER TABLE " + DataBase.TABLE_LOCALES + " ADD COLUMN " + DataBase.DataLocalColumns.LOCAL_GESTIONADO + " TEXT NOT NULL DEFAULT '-'");
+        sqLiteDatabase.execSQL("ALTER TABLE " + DataBase.TABLE_LOCALES + " ADD COLUMN " + DataBase.DataLocalColumns.LOCAL_ID + " TEXT NOT NULL DEFAULT '-'");
     }
 
     public String getTableAsString(String tableName) {
@@ -56,6 +56,7 @@ public class LogicDataBase extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         if (db != null){
             ContentValues values = new ContentValues();
+            values.put(DataBase.DataLocalColumns.LOCAL_ID, local.getIdLocal());
             values.put(DataBase.DataLocalColumns.LOCAL_NOMBRE, local.getNombre());
             values.put(DataBase.DataLocalColumns.LOCAL_NUMERO, local.getNumero());
             values.put(DataBase.DataLocalColumns.LOCAL_AREA, local.getArea());
@@ -92,9 +93,10 @@ public class LogicDataBase extends SQLiteOpenHelper {
         //Donde esta que la tabla sea locales, o como from locales
         try{
             //Cursor cursor = db.query(DataBase.TABLE_LOCALES,columns,columns[11] + "="+centroComercial,null,null,null,null);
-            Cursor cursor = db.rawQuery("SELECT key_id, nombre, numero, area, tipo, tipoBien, codigoCategoria, categoria, codigoSubcategoria, subcategoria, codigoBien, descripcionBien, centroComercial, gestionado FROM locales WHERE centroComercial='"+centroComercial+"'", null);
+            Cursor cursor = db.rawQuery("SELECT * FROM locales WHERE centroComercial='"+centroComercial+"'", null);
             if(cursor.moveToFirst()){
                 while(!cursor.isAfterLast()){
+                    String idLocal = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_ID));
                     String nom = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_NOMBRE));
                     String num = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_NUMERO));
                     String area = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_AREA));
@@ -112,7 +114,7 @@ public class LogicDataBase extends SQLiteOpenHelper {
 
                     //Local l = new Local(nom,num,area,tipo,tipoBien,codCat,cat,codSub,sub,codBien,descripBien,cc);
 
-                    Local l = new Local(key,nom, num, area, codCat, codSub, codBien, cc, gestionado);
+                    Local l = new Local(idLocal,key,nom, num, area, codCat, codSub, codBien, cc, gestionado);
 
                     localesCentroComercial.add(l);
                     cursor.moveToNext();
@@ -124,22 +126,6 @@ public class LogicDataBase extends SQLiteOpenHelper {
         }
         System.out.println("-----------------------\nSize ArrayList en DB: "+localesCentroComercial.size());
         return localesCentroComercial;
-    }
-
-    public void actualizarLocal(String idLocalTabla, String nombreNuevo, String catNueva, String subcatNueva, String descripNueva){
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String[] selectionArgs = {idLocalTabla};
-
-        if(db != null){
-            ContentValues values =  new ContentValues();
-            values.put(DataBase.DataLocalColumns.LOCAL_NOMBRE, nombreNuevo);
-            values.put(DataBase.DataLocalColumns.LOCAL_CATEGORIA, catNueva);
-            values.put(DataBase.DataLocalColumns.LOCAL_SUBCATEGORIA, subcatNueva);
-            values.put(DataBase.DataLocalColumns.LOCAL_DESCRIPCIONBIEN, descripNueva);
-            db.update(DataBase.TABLE_LOCALES,values, "key_id = ?",selectionArgs);
-            db.close();
-        }
     }
 
     public void gestionLocales(){
@@ -191,7 +177,64 @@ public class LogicDataBase extends SQLiteOpenHelper {
             e.printStackTrace();
         }
         return ccs;
+    }
 
+    public Local searchLocal(String idLocal){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Local> localActualizar = new ArrayList<Local>();
+
+        String[] selectionArgs = {idLocal};
+
+        try {
+            //Cursor cursor = db.query(DataBase.TABLE_LOCALES,columns,columns[11] + "="+centroComercial,null,null,null,null);
+            Cursor cursor = db.rawQuery("select * from " + DataBase.TABLE_LOCALES + " where key_id ='?'",selectionArgs);
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    int key = cursor.getInt(cursor.getColumnIndex("key_id"));
+                    String idLocalCRM = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_ID));
+                    String nom = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_NOMBRE));
+                    String num = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_NUMERO));
+                    String area = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_AREA));
+                    String codCat = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_CODIGOCATEGORIA));
+                    String codSub = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_CODIGOSUBCATEGORIA));
+                    String codBien = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_CODIGOBIEN));
+                    String cc = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_CENTROCOMERCIAL));
+                    String gestionado = cursor.getString(cursor.getColumnIndex(DataBase.DataLocalColumns.LOCAL_GESTIONADO));
+
+                    Local l = new Local(idLocalCRM,key,nom,num,area,codCat,codSub,codBien,cc,gestionado);
+                    localActualizar.add(l);
+                    cursor.moveToNext();
+
+                }
+            }
+            cursor.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("-----------------------\nSize ArrayList en DB: "+localActualizar.size());
+        return localActualizar.get(0);
+    }
+
+    public void actualizarLocal(String idLocalTabla, String nombreNuevo, String catNueva, String subcatNueva, String descripNueva){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Local localaActualizar = searchLocal(idLocalTabla);
+
+        localaActualizar.setDescripcion(catNueva,subcatNueva,descripNueva);
+
+        String[] selectionArgs = {idLocalTabla};
+
+        if(db != null){
+            ContentValues values =  new ContentValues();
+            values.put(DataBase.DataLocalColumns.LOCAL_NOMBRE, nombreNuevo);
+            values.put(DataBase.DataLocalColumns.LOCAL_CATEGORIA, catNueva);
+            values.put(DataBase.DataLocalColumns.LOCAL_SUBCATEGORIA, subcatNueva);
+            values.put(DataBase.DataLocalColumns.LOCAL_DESCRIPCIONBIEN, descripNueva);
+            values.put(DataBase.DataLocalColumns.LOCAL_CODIGOCATEGORIA, localaActualizar.getCodigoCategoria());
+            values.put(DataBase.DataLocalColumns.LOCAL_CODIGOSUBCATEGORIA, localaActualizar.getCodigoSubcategoria());
+            values.put(DataBase.DataLocalColumns.LOCAL_CODIGOBIEN, localaActualizar.getCodigoBien());
+            db.update(DataBase.TABLE_LOCALES,values, "key_id = ?",selectionArgs);
+            db.close();
+        }
     }
 
 }

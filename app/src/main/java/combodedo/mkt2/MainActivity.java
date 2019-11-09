@@ -141,8 +141,9 @@ public class MainActivity extends AppCompatActivity {
                     String codigoCategoria = row.getString("codigoCategoria");
                     String codigoSubcategoria = row.getString("codigoSubcategoria");
                     String codigoBien = row.getString("tipoBienServicio");
+                    String idLocal = row.getString("idLocal");
 
-                    Local local = new Local(nombre,numeroLocal,area,codigoCategoria,codigoSubcategoria,codigoBien,centroComercial);
+                    Local local = new Local(idLocal,nombre,numeroLocal,area,codigoCategoria,codigoSubcategoria,codigoBien,centroComercial);
                     db.addLocal(local);
                 }
 

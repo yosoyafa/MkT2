@@ -11,6 +11,7 @@ public class DataBase {
     public static final String SQL_CREATE_TABLE_LOCALESCOMERCIALES = "CREATE TABLE IF NOT EXISTS "
             + DataBase.TABLE_LOCALES + " ("
             + "key_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + DataLocalColumns.LOCAL_ID + " TEXT,"
             + DataLocalColumns.LOCAL_NOMBRE + " TEXT,"
             + DataLocalColumns.LOCAL_NUMERO + " TEXT,"
             + DataLocalColumns.LOCAL_AREA + " TEXT,"
@@ -40,6 +41,7 @@ public class DataBase {
             + DataGestionColumns.GESTION_ONLINE + "TEXT)";
 
     public static abstract class DataLocalColumns implements BaseColumns {
+        public static final String LOCAL_ID = "idLocal";
         public static final String LOCAL_NOMBRE = "nombre";
         public static final String LOCAL_NUMERO = "numero";
         public static final String LOCAL_AREA = "area";
