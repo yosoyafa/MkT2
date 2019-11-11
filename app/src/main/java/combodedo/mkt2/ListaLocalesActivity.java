@@ -26,7 +26,6 @@ public class ListaLocalesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_locales);
         db = MainActivity.getDb();
-        //System.out.println(db.getTableAsString(DataBase.TABLE_LOCALES));
         toolbar = findViewById(R.id.toolbar_lista_locales);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null){
@@ -35,7 +34,16 @@ public class ListaLocalesActivity extends AppCompatActivity {
         }
         configLocales();
         getSupportActionBar().setTitle("Locales "+getIntent().getStringExtra("cc"));
+        db.getTableAsString(DataBase.TABLE_LOCALES);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        configLocales();
+        // The activity has become visible (it is now "resumed").
+    }
+
 
     private void configLocales() {
         String cc = getIntent().getStringExtra("cc");

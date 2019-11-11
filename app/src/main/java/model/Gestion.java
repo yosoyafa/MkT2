@@ -1,7 +1,7 @@
 package model;
 
 public class Gestion {
-    private String idLocalTabla, nombreNuevo, categoriaNueva, subcategoriaNueva, descripcionBienNueva, areaNueva;
+    private String idLocalTabla, nombreNuevo, categoriaNueva, subcategoriaNueva, descripcionBienNueva, areaNueva, observacion;
     private int online;
 
     public Gestion(String idLocalTabla, String nombreNuevo, String areaNueva, String categoriaNueva, String subcategoriaNueva, String descripcionBienNueva, int online) {

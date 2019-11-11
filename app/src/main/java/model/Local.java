@@ -17,6 +17,13 @@ public class Local {
         setCodigos(codigoCategoria,codigoSubcategoria,codigoBien);
     }*/
 
+    public Local(String cat, String sub, String bien){
+        this.categoria = cat;
+        this.subcategoria = sub;
+        this.descripcionBien = bien;
+        setDescripcion(cat,sub,bien);
+    }
+
     public Local(String idLocal, String nombre, String numero, String area, String codigoCategoria, String codigoSubcategoria, String codigoBien, String centroComercial) {
         this.idLocal = idLocal;
         this.nombre = nombre;
@@ -191,257 +198,269 @@ public class Local {
                     codigoBien = 1 + "";
                 }
             }
+        }else if(categoria.equalsIgnoreCase("Disponible")){
+            codigoCategoria = 11 + "";
+            if(subcategoria.equalsIgnoreCase("Disponible")){
+                codigoSubcategoria = 1 + "";
+                if(descripcionBien.equalsIgnoreCase("Disponible")) {
+                    codigoBien = 1 + "";
+                }
+            }
         }
     }
 
-
     private void setCodigos(String codigoCategoria, String codigoSubcategoria, String codigoBien) {
-        switch(codigoCategoria){
-            case "1":
-                categoria = "Moda, Muebles y Enseres";
-                switch (codigoSubcategoria){
-                    case "1":
-                        subcategoria = "Moda";
 
-                        switch(codigoBien){
-                            case "1":
-                                tipoBien = "Ropa para damas";
-                                break;
-                            case "2":
-                                tipoBien = "Ropa para hombres";
-                                break;
-                            case "3":
-                                tipoBien = "Ropa para niños";
-                                break;
-                            case "4":
-                                tipoBien = "Ropa Interior";
-                                break;
-                            case "5":
-                                tipoBien = "Calzado para dama";
-                                break;
-                            case "6":
-                                tipoBien = "Calzado para hombre";
-                                break;
-                            case "7":
-                                tipoBien = "Calzado para niños";
-                                break;
-                            case "8":
-                                tipoBien = "Ropa y Calzado Deportivo";
-                                break;
-                            case "9":
-                                tipoBien = "Accesorios";
-                                break;
-                            case "10":
-                                tipoBien = "Calzado para la Familia ";
-                                break;
-                            case "11":
-                                tipoBien = "Ropa para la Familia ";
-                                break;
-                        }
+        if(codigoBien != null && codigoCategoria != null && codigoSubcategoria != null){
+            switch(codigoCategoria){
+                case "1":
+                    categoria = "Moda, Muebles y Enseres";
+                    switch (codigoSubcategoria){
+                        case "1":
+                            subcategoria = "Moda";
 
-                        break;
+                            switch(codigoBien){
+                                case "1":
+                                    tipoBien = "Ropa para damas";
+                                    break;
+                                case "2":
+                                    tipoBien = "Ropa para hombres";
+                                    break;
+                                case "3":
+                                    tipoBien = "Ropa para niños";
+                                    break;
+                                case "4":
+                                    tipoBien = "Ropa Interior";
+                                    break;
+                                case "5":
+                                    tipoBien = "Calzado para dama";
+                                    break;
+                                case "6":
+                                    tipoBien = "Calzado para hombre";
+                                    break;
+                                case "7":
+                                    tipoBien = "Calzado para niños";
+                                    break;
+                                case "8":
+                                    tipoBien = "Ropa y Calzado Deportivo";
+                                    break;
+                                case "9":
+                                    tipoBien = "Accesorios";
+                                    break;
+                                case "10":
+                                    tipoBien = "Calzado para la Familia ";
+                                    break;
+                                case "11":
+                                    tipoBien = "Ropa para la Familia ";
+                                    break;
+                            }
 
-                    case "3":
-                        subcategoria = "Muebles y Enseres";
+                            break;
 
-                        switch(codigoBien){
-                            case "1":
-                                tipoBien = "Sala, Comedor y Alcoba";
-                                break;
-                            case "2":
-                                tipoBien = "Equipo de iluminación y decoración";
-                                break;
-                            case "3":
-                                tipoBien = "Electrodomésticos";
-                                break;
-                            case "4":
-                                tipoBien = "Video, Sonido y Tecnologia";
-                                break;
-                            case "5":
-                                tipoBien = "Utensilios domésticos";
-                                break;
-                            case "6":
-                                tipoBien = "Ropa de Hogar";
-                                break;
-                            case "7":
-                                tipoBien = "Mejoras y cuidado para el hogar";
-                                break;
-                            case "8":
-                                tipoBien = "Artículos y productos para el hogar";
-                                break;
-                        }
+                        case "3":
+                            subcategoria = "Muebles y Enseres";
 
-                        break;
+                            switch(codigoBien){
+                                case "1":
+                                    tipoBien = "Sala, Comedor y Alcoba";
+                                    break;
+                                case "2":
+                                    tipoBien = "Equipo de iluminación y decoración";
+                                    break;
+                                case "3":
+                                    tipoBien = "Electrodomésticos";
+                                    break;
+                                case "4":
+                                    tipoBien = "Video, Sonido y Tecnologia";
+                                    break;
+                                case "5":
+                                    tipoBien = "Utensilios domésticos";
+                                    break;
+                                case "6":
+                                    tipoBien = "Ropa de Hogar";
+                                    break;
+                                case "7":
+                                    tipoBien = "Mejoras y cuidado para el hogar";
+                                    break;
+                                case "8":
+                                    tipoBien = "Artículos y productos para el hogar";
+                                    break;
+                            }
 
-                    case "4":
-                        subcategoria = "Departamental";
-                        tipoBien = subcategoria;
-                        break;
-                }
-                break;
+                            break;
 
-            case "2":
-                categoria = "Bienes y  Servicios de Conveniencia";
-                switch (codigoSubcategoria){
-                    case "1":
-                        subcategoria = "Supermercado";
-                        tipoBien = subcategoria;
-                        break;
+                        case "4":
+                            subcategoria = "Departamental";
+                            tipoBien = subcategoria;
+                            break;
+                    }
+                    break;
 
-                    case "2":
-                        subcategoria = "Comidas y Bebidas";
+                case "2":
+                    categoria = "Bienes y  Servicios de Conveniencia";
+                    switch (codigoSubcategoria){
+                        case "1":
+                            subcategoria = "Supermercado";
+                            tipoBien = subcategoria;
+                            break;
 
-                        switch(codigoBien){
-                            case "1":
-                                tipoBien = "Restaurantes a mantel";
-                                break;
-                            case "2":
-                                tipoBien = "Comida informal";
-                                break;
-                            case "3":
-                                tipoBien = "Panadería y Pasteleria";
-                                break;
-                            case "4":
-                                tipoBien = "Cafe, Postres y Helados";
-                                break;
-                            case "5":
-                                tipoBien = "Bares";
-                                break;
-                        }
+                        case "2":
+                            subcategoria = "Comidas y Bebidas";
 
-                        break;
+                            switch(codigoBien){
+                                case "1":
+                                    tipoBien = "Restaurantes a mantel";
+                                    break;
+                                case "2":
+                                    tipoBien = "Comida informal";
+                                    break;
+                                case "3":
+                                    tipoBien = "Panadería y Pasteleria";
+                                    break;
+                                case "4":
+                                    tipoBien = "Cafe, Postres y Helados";
+                                    break;
+                                case "5":
+                                    tipoBien = "Bares";
+                                    break;
+                            }
 
-                    case "3":
-                        subcategoria = "Cuidado Personal";
+                            break;
 
-                        switch(codigoBien){
-                            case "1":
-                                tipoBien = "Farmacia";
-                                break;
-                            case "2":
-                                tipoBien = "Gimnasio";
-                                break;
-                            case "3":
-                                tipoBien = "Salones de Belleza";
-                                break;
-                            case "5":
-                                tipoBien = "Belleza, salud, perfumería";
-                                break;
-                        }
+                        case "3":
+                            subcategoria = "Cuidado Personal";
 
-                        break;
+                            switch(codigoBien){
+                                case "1":
+                                    tipoBien = "Farmacia";
+                                    break;
+                                case "2":
+                                    tipoBien = "Gimnasio";
+                                    break;
+                                case "3":
+                                    tipoBien = "Salones de Belleza";
+                                    break;
+                                case "5":
+                                    tipoBien = "Belleza, salud, perfumería";
+                                    break;
+                            }
 
-                    case "4":
-                        subcategoria = "Servicios";
+                            break;
 
-                        switch(codigoBien){
-                            case "1":
-                                tipoBien = "Servicios para mascotas";
-                                break;
-                            case "2":
-                                tipoBien = "Servicios y equipos de telefonia";
-                                break;
-                            case "3":
-                                tipoBien = "Servicio de Lavanderia";
-                                break;
-                            case "4":
-                                tipoBien = "Reparacion de Vestuario";
-                                break;
-                            case "5":
-                                tipoBien = "Reparacion de Calzado";
-                                break;
-                            case "6":
-                                tipoBien = "Servicio de Mensajería";
-                                break;
-                            case "7":
-                                tipoBien = "Turismo, tiquetes aereos y terrestres";
-                                break;
-                            case "8":
-                                tipoBien = "Servicios financieros";
-                                break;
-                            case "9":
-                                tipoBien = "Otros servicios";
-                                break;
-                        }
+                        case "4":
+                            subcategoria = "Servicios";
 
-                        break;
-                }
-                break;
+                            switch(codigoBien){
+                                case "1":
+                                    tipoBien = "Servicios para mascotas";
+                                    break;
+                                case "2":
+                                    tipoBien = "Servicios y equipos de telefonia";
+                                    break;
+                                case "3":
+                                    tipoBien = "Servicio de Lavanderia";
+                                    break;
+                                case "4":
+                                    tipoBien = "Reparacion de Vestuario";
+                                    break;
+                                case "5":
+                                    tipoBien = "Reparacion de Calzado";
+                                    break;
+                                case "6":
+                                    tipoBien = "Servicio de Mensajería";
+                                    break;
+                                case "7":
+                                    tipoBien = "Turismo, tiquetes aereos y terrestres";
+                                    break;
+                                case "8":
+                                    tipoBien = "Servicios financieros";
+                                    break;
+                                case "9":
+                                    tipoBien = "Otros servicios";
+                                    break;
+                            }
 
-            case "3":
-                categoria = "Otras Categorías";
-                subcategoria = categoria;
+                            break;
+                    }
+                    break;
 
-                switch(codigoBien){
-                    case "1":
-                        tipoBien = "Librería, textos y papelería";
-                        break;
-                    case "2":
-                        tipoBien = "Artículos Deportivos";
-                        break;
-                    case "3":
-                        tipoBien = "Joyerías y relojerías";
-                        break;
-                    case "4":
-                        tipoBien = "Juguetería";
-                        break;
-                    case "5":
-                        tipoBien = "Serv. Médicos (consultas, laboratorio, imágenes)";
-                        break;
-                    case "6":
-                        tipoBien = "Fotografia";
-                        break;
-                    case "7":
-                        tipoBien = "Otras categorías";
-                        break;
-                }
+                case "3":
+                    categoria = "Otras Categorías";
+                    subcategoria = categoria;
 
-                break;
+                    switch(codigoBien){
+                        case "1":
+                            tipoBien = "Librería, textos y papelería";
+                            break;
+                        case "2":
+                            tipoBien = "Artículos Deportivos";
+                            break;
+                        case "3":
+                            tipoBien = "Joyerías y relojerías";
+                            break;
+                        case "4":
+                            tipoBien = "Juguetería";
+                            break;
+                        case "5":
+                            tipoBien = "Serv. Médicos (consultas, laboratorio, imágenes)";
+                            break;
+                        case "6":
+                            tipoBien = "Fotografia";
+                            break;
+                        case "7":
+                            tipoBien = "Otras categorías";
+                            break;
+                    }
 
-            case "5":
-                categoria = "Entretenimiento";
-                subcategoria = categoria;
+                    break;
 
-                switch(codigoBien){
-                    case "1":
-                        tipoBien = "Cine";
-                        break;
-                    case "2":
-                        tipoBien = "Bolera";
-                        break;
-                    case "3":
-                        tipoBien = "Parque infantil";
-                        break;
-                    case "4":
-                        tipoBien = "Juegos de azar /casino";
-                        break;
-                    case "5":
-                        tipoBien = "Cancha Sintetica";
-                        break;
-                }
+                case "5":
+                    categoria = "Entretenimiento";
+                    subcategoria = categoria;
 
-                break;
+                    switch(codigoBien){
+                        case "1":
+                            tipoBien = "Cine";
+                            break;
+                        case "2":
+                            tipoBien = "Bolera";
+                            break;
+                        case "3":
+                            tipoBien = "Parque infantil";
+                            break;
+                        case "4":
+                            tipoBien = "Juegos de azar /casino";
+                            break;
+                        case "5":
+                            tipoBien = "Cancha Sintetica";
+                            break;
+                    }
 
-            case "10":
-                categoria = "Vehículos y Serviteca";
-                subcategoria = categoria;
+                    break;
 
-                switch(codigoBien){
-                    case "1":
-                        tipoBien = "Vehículos / Motos";
-                        break;
-                    case "2":
-                        tipoBien = "Servicios de Serviteca";
-                        break;
-                }
+                case "10":
+                    categoria = "Vehículos y Serviteca";
+                    subcategoria = categoria;
 
-                break;
+                    switch(codigoBien){
+                        case "1":
+                            tipoBien = "Vehículos / Motos";
+                            break;
+                        case "2":
+                            tipoBien = "Servicios de Serviteca";
+                            break;
+                    }
 
-            case "11":
-                categoria = "Disponible";
-                subcategoria = categoria;
-                tipoBien = subcategoria;
-                break;
+                    break;
+
+                case "11":
+                    categoria = "Disponible";
+                    subcategoria = categoria;
+                    tipoBien = subcategoria;
+                    break;
+            }
+        }else{
+            System.out.println("MARICOOOO son null las categorias :c");
         }
     }
 

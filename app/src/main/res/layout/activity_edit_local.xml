@@ -114,15 +114,6 @@
                         android:orientation="vertical">
 
                         <RadioButton
-                            android:id="@+id/rb_igual"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:checked="false"
-                            android:onClick="onRadioButtonClicked"
-                            android:text="Igual" />
-
-                        <RadioButton
                             android:id="@+id/rb_cambio"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -130,6 +121,15 @@
                             android:checked="true"
                             android:onClick="onRadioButtonClicked"
                             android:text="Cambió" />
+
+                        <RadioButton
+                            android:id="@+id/rb_igual"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:checked="false"
+                            android:onClick="onRadioButtonClicked"
+                            android:text="Igual" />
 
                         <RadioButton
                             android:id="@+id/rb_vacio"
