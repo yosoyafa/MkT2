@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 progress = ProgressDialog.show(MainActivity.this, "Descargando información de centros comerciales",
-                        "Se están descagando los datos de tus centros comerciales", true);
+                        "Se están descargando los datos de tus centros comerciales", true);
 
                 new Thread(new Runnable() {
                     @Override

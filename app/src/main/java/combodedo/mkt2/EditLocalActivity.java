@@ -248,10 +248,21 @@ public class EditLocalActivity extends AppCompatActivity implements GestionDialo
         String nombre = etNombre.getText().toString();
         String observacion = etObservacion.getText().toString();
         String area = etArea.getText().toString();
-        String categoria = catNuevo;
-        String subcategoria = subcatNuevo;
-        String bien = bienNuevo;
-        if (!nombre.isEmpty() && !observacion.isEmpty() && !area.isEmpty() && !categoria.isEmpty() && !subcategoria.isEmpty() && !bien.isEmpty()) {
+        String categoria = "";
+        String subcategoria = "";
+        String bien = "";
+        if(rbCambio.isSelected()){
+            categoria = spinnerCategoria.getSelectedItem().toString();
+            subcategoria = spinnerSubcategoria.getSelectedItem().toString();
+            bien = spinnerBien.getSelectedItem().toString();
+        }else{
+            categoria = catNuevo;
+            subcategoria = subcatNuevo;
+            bien = bienNuevo;
+        }
+
+        System.out.println("_____------________-------________\nCATEGORIA: "+categoria+"\nSub: "+subcategoria+"\nbien: "+bien);
+        if (!nombre.isEmpty() && !observacion.isEmpty() && !area.isEmpty()) {
             displayDialog(nombre, area, observacion, categoria, subcategoria, bien);
         } else {
             Toast.makeText(getApplicationContext(), "Completa todos los campos.",

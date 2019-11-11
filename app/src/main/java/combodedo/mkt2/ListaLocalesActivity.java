@@ -34,7 +34,7 @@ public class ListaLocalesActivity extends AppCompatActivity {
         }
         configLocales();
         getSupportActionBar().setTitle("Locales "+getIntent().getStringExtra("cc"));
-        db.getTableAsString(DataBase.TABLE_LOCALES);
+        //db.getTableAsString(DataBase.TABLE_LOCALES);
     }
 
     @Override
