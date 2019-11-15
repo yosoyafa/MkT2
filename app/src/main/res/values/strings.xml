@@ -56,7 +56,7 @@
         <item>Sala, Comedor y Alcoba</item>
         <item>Equipo de iluminación y decoración</item>
         <item>Electrodomésticos</item>
-        <item>Video, Sonido y Tecnologia</item>
+        <item>Video, Sonido y Tecnología</item>
         <item>Utensilios domésticos</item>
         <item>Ropa de Hogar</item>
         <item>Mejoras y cuidado para el hogar</item>
@@ -74,8 +74,8 @@
     <string-array name="tipobien2_2">
         <item>Restaurantes a mantel</item>
         <item>Comida informal</item>
-        <item>Panadería y Pasteleria</item>
-        <item>Cafe, Postres y Helados</item>
+        <item>Panadería y Pastelería</item>
+        <item>Café, Postres y Helados</item>
         <item>Bares</item>
     </string-array>
 
@@ -83,15 +83,15 @@
         <item>Farmacia</item>
         <item>Gimnasio</item>
         <item>Salones de Belleza</item>
-        <item>Cafe, Postres y Helados</item>
+        <item>Belleza, salud, perfumería</item>
     </string-array>
 
     <string-array name="tipobien2_4">
         <item>Servicios para mascotas</item>
-        <item>Servicios y equipos de tecnología</item>
-        <item>Servicio de Lavanderia</item>
-        <item>Reparacion de Vestuario</item>
-        <item>Reparacion de Calzado</item>
+        <item>Servicios y equipos de telefonía</item>
+        <item>Servicios de Lavandería</item>
+        <item>Reparación de Vestuario</item>
+        <item>Reparación de Calzado</item>
         <item>Servicio de Mensajería</item>
         <item>Turismo, tiquetes aereos y terrestres</item>
         <item>Servicios financieros</item>
@@ -104,7 +104,7 @@
         <item>Joyerías y relojerías</item>
         <item>Juguetería</item>
         <item>Serv. Médicos (consultas, laboratorio, imágenes)</item>
-        <item>Fotografia</item>
+        <item>Fotografía</item>
         <item>Otras categorías</item>
     </string-array>
 
@@ -112,12 +112,12 @@
         <item>Cine</item>
         <item>Bolera</item>
         <item>Parque infantil</item>
-        <item>Juegos de azar /casino</item>
+        <item>Juegos de azar/casino</item>
         <item>Cancha Sintetica</item>
     </string-array>
 
     <string-array name="tipobien10_1">
-        <item>Vehículos / Motos</item>
+        <item>Vehículos/Motos</item>
         <item>Servicios de Serviteca</item>
     </string-array>
 

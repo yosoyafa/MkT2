@@ -248,22 +248,16 @@ public class EditLocalActivity extends AppCompatActivity implements GestionDialo
         String nombre = etNombre.getText().toString();
         String observacion = etObservacion.getText().toString();
         String area = etArea.getText().toString();
-        String categoria = "";
-        String subcategoria = "";
-        String bien = "";
-        if(rbCambio.isSelected()){
-            categoria = spinnerCategoria.getSelectedItem().toString();
-            subcategoria = spinnerSubcategoria.getSelectedItem().toString();
-            bien = spinnerBien.getSelectedItem().toString();
-        }else{
-            categoria = catNuevo;
-            subcategoria = subcatNuevo;
-            bien = bienNuevo;
+
+        if(rbCambio.isChecked()){
+            catNuevo = spinnerCategoria.getSelectedItem().toString();
+            subcatNuevo = spinnerSubcategoria.getSelectedItem().toString();
+            bienNuevo = spinnerBien.getSelectedItem().toString();
         }
 
-        System.out.println("_____------________-------________\nCATEGORIA: "+categoria+"\nSub: "+subcategoria+"\nbien: "+bien);
+        //System.out.println("_____------________-------________\nCATEGORIA: "+categoria+"\nSub: "+subcategoria+"\nbien: "+bien);
         if (!nombre.isEmpty() && !observacion.isEmpty() && !area.isEmpty()) {
-            displayDialog(nombre, area, observacion, categoria, subcategoria, bien);
+            displayDialog(nombre, area, observacion, catNuevo, subcatNuevo, bienNuevo);
         } else {
             Toast.makeText(getApplicationContext(), "Completa todos los campos.",
                     Toast.LENGTH_LONG).show();
@@ -289,13 +283,13 @@ public class EditLocalActivity extends AppCompatActivity implements GestionDialo
         String nombreNuevo = etNombre.getText().toString();
         String observacion = etObservacion.getText().toString();
         String areaNuevo = etArea.getText().toString();
-        //String categoriaNuevo = spinnerCategoria.getSelectedItem().toString();
-        //String subcategoriaNuevo = spinnerSubcategoria.getSelectedItem().toString();
         String cc = local.getCentroComercial();
 
+        Local codigos = new Local(catNuevo,subcatNuevo,bienNuevo);
+
         ConexionHTTP conexionHTTP = new ConexionHTTP();
-        conexionHTTP.gestion(local.getIdLocal(), cc, local.getNombre(), nombreNuevo, local.getArea(), areaNuevo, local.getCodigoCategoria(), catNuevo,
-                local.getSubcategoria(), subcatNuevo, local.getTipoBien(), bienNuevo, observacion);
+        conexionHTTP.gestion(local.getIdLocal(), cc, local.getNombre(), nombreNuevo, local.getArea(), areaNuevo, local.getCodigoCategoria(), codigos.getCodigoCategoria(),
+                local.getCodigoSubcategoria(), codigos.getCodigoSubcategoria(), local.getCodigoBien(), codigos.getCodigoBien(), observacion);
         while (!conexionHTTP.isFinishProcess()) {
             try {
                 Thread.sleep(50);
@@ -311,8 +305,8 @@ public class EditLocalActivity extends AppCompatActivity implements GestionDialo
                 if (estado.equals("successful")) {
                     Toast.makeText(getApplicationContext(), "Gestión exitosa",
                             Toast.LENGTH_LONG).show();
-                    Gestion gestion = new Gestion(local.getKey_id() + "", nombreNuevo, areaNuevo, catNuevo, subcatNuevo, bienNuevo, 1);
-                    db.addGestion(gestion);
+                    //Gestion gestion = new Gestion(local.getKey_id() + "", nombreNuevo, areaNuevo, catNuevo, subcatNuevo, bienNuevo, 1);
+                    //db.addGestion(gestion);
                     updateOnDB(nombreNuevo, areaNuevo, catNuevo, subcatNuevo, bienNuevo, observacion);
                     return true;
                 } else {
@@ -327,19 +321,16 @@ public class EditLocalActivity extends AppCompatActivity implements GestionDialo
         } else {
             Toast.makeText(getApplicationContext(), "Gestion OFFLINE exitosa.\nRecuerda sincronizar cuando tengas acceso a internet.",
                     Toast.LENGTH_LONG).show();
-            Gestion gestion = new Gestion(local.getKey_id() + "", nombreNuevo, areaNuevo, catNuevo, subcatNuevo, bienNuevo, 0);
-            db.addGestion(gestion);
+            //Gestion gestion = new Gestion(local.getKey_id() + "", nombreNuevo, areaNuevo, catNuevo, subcatNuevo, bienNuevo, 0);
+            //db.addGestion(gestion);
             updateOnDB(nombreNuevo, areaNuevo, catNuevo, subcatNuevo, bienNuevo, observacion);
             return true;
         }
         return false;
     }
 
-    //TODO
     private void updateOnDB(String nombreNuevo, String areaNuevo, String categoriaNuevo, String subcategoriaNuevo, String bienNuevo, String observacion) {
         db.updateLocal(local,nombreNuevo,areaNuevo,categoriaNuevo,subcategoriaNuevo,bienNuevo);
-
-        //db.actualizarLocal(local.getKey_id() + "", nombreNuevo, areaNuevo, categoriaNuevo, subcategoriaNuevo, bienNuevo, observacion);
     }
 
     public void onRadioButtonClicked(View view) {
@@ -349,14 +340,6 @@ public class EditLocalActivity extends AppCompatActivity implements GestionDialo
         switch (view.getId()) {
             case R.id.rb_igual:
                 if (checked) {
-                    /*etNombre.setText(local.getNombre());
-                    etArea.setText(local.getArea());
-                    etNombre.setEnabled(false);
-                    etArea.setEnabled(false);
-                    setSpinnersIgual(local.getCategoria(), local.getSubcategoria(), local.getTipoBien());
-                    spinnerBien.setEnabled(false);
-                    spinnerCategoria.setEnabled(false);
-                    spinnerSubcategoria.setEnabled(false);*/
                     spinnerCategoria.setVisibility(View.GONE);
                     spinnerSubcategoria.setVisibility(View.GONE);
                     spinnerBien.setVisibility(View.GONE);
@@ -380,13 +363,6 @@ public class EditLocalActivity extends AppCompatActivity implements GestionDialo
                 break;
             case R.id.rb_cambio:
                 if (checked) {
-                    /*spinnerBien.setEnabled(true);
-                    spinnerSubcategoria.setEnabled(true);
-                    spinnerCategoria.setEnabled(true);
-                    etNombre.setEnabled(true);
-                    etNombre.setText("");
-                    etArea.setEnabled(true);
-                    etArea.setText("");*/
                     spinnerCategoria.setVisibility(View.VISIBLE);
                     spinnerSubcategoria.setVisibility(View.VISIBLE);
                     spinnerBien.setVisibility(View.VISIBLE);
@@ -422,7 +398,6 @@ public class EditLocalActivity extends AppCompatActivity implements GestionDialo
                     catNuevo = tvSpCategoria.getText().toString();
                     subcatNuevo = tvSpSubcategoria.getText().toString();
                     bienNuevo = tvSpBien.getText().toString();
-
                 }
                 break;
         }

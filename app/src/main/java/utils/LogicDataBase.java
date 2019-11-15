@@ -97,11 +97,10 @@ public class LogicDataBase extends SQLiteOpenHelper {
             values.put(DataBase.DataGestionColumns.GESTION_CATEGORIANUEVA, gestion.getCategoriaNueva());
             values.put(DataBase.DataGestionColumns.GESTION_SUBCATEGORIANUEVA, gestion.getSubcategoriaNueva());
             values.put(DataBase.DataGestionColumns.GESTION_DESCRIPCIONBIENNUEVA, gestion.getDescripcionBienNueva());
-            values.put(DataBase.DataGestionColumns.GESTION_ONLINE, gestion.getOnline());
+            values.put(DataBase.DataGestionColumns.GESTION_ONLINE, gestion.getOnline()+"");
             db.insert(DataBase.TABLE_GESTION,null,values);
             db.close();
         }
-
     }
 
     public ArrayList<Local> selectLocales(String centroComercial){
@@ -263,6 +262,8 @@ public class LogicDataBase extends SQLiteOpenHelper {
 
     public void updateLocal(Local loc, String nomN, String areaN, String catN, String subN, String bienN){
         SQLiteDatabase db = getWritableDatabase();
+
+        System.out.println("UPDATE:\ncatN: "+catN+"\nsubN: "+subN+"\nbienN: "+bienN);
 
         Local locPr = new Local(catN,subN,bienN);
         String codCatN = locPr.getCodigoCategoria();
