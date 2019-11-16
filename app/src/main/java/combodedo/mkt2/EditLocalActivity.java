@@ -16,11 +16,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONArrayRequestListener;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import model.Gestion;
 import model.Local;
 import utils.ConexionHTTP;
+import utils.Links;
 import utils.LogicDataBase;
 
 public class EditLocalActivity extends AppCompatActivity implements GestionDialog.ExampleDialogListener {
@@ -279,15 +287,62 @@ public class EditLocalActivity extends AppCompatActivity implements GestionDialo
         paymentDialog.show(getSupportFragmentManager(), "example dialog");
     }
 
-    private boolean uploadChanges() {
-        String nombreNuevo = etNombre.getText().toString();
-        String observacion = etObservacion.getText().toString();
-        String areaNuevo = etArea.getText().toString();
-        String cc = local.getCentroComercial();
+    private void uploadChanges() {
+        final String nombreNuevo = etNombre.getText().toString();
+        final String observacion = etObservacion.getText().toString();
+        final String areaNuevo = etArea.getText().toString();
+        final String cc = local.getCentroComercial();
 
         Local codigos = new Local(catNuevo,subcatNuevo,bienNuevo);
 
-        ConexionHTTP conexionHTTP = new ConexionHTTP();
+        String link = new Links().getActualizacion(local.getIdLocal(), cc, local.getNombre(), nombreNuevo, local.getArea(), areaNuevo, local.getCodigoCategoria(), codigos.getCodigoCategoria(),
+                local.getCodigoSubcategoria(), codigos.getCodigoSubcategoria(), local.getCodigoBien(), codigos.getCodigoBien(), observacion);
+
+        System.out.println(link);
+        AndroidNetworking.get(link)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        response.toString();
+                        if(response != null){
+                            try{
+                                String estado = response.getString("estado");
+                                if (estado.equals("successful")) {
+                                    Toast.makeText(getApplicationContext(), "Gestión exitosa",
+                                            Toast.LENGTH_LONG).show();
+                                    //Gestion gestion = new Gestion(local.getKey_id() + "", nombreNuevo, areaNuevo, catNuevo, subcatNuevo, bienNuevo, 1);
+                                    //db.addGestion(gestion);
+                                    updateOnDB(nombreNuevo, areaNuevo, catNuevo, subcatNuevo, bienNuevo, observacion);
+                                    //return true;
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Gestión fallida.",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            }catch(Exception e){
+                                Toast.makeText(getApplicationContext(), "No se pudo realizar la gestión correctamente.",
+                                        Toast.LENGTH_LONG).show();
+                                e.printStackTrace();
+                            }
+                        }else{
+                            Toast.makeText(getApplicationContext(), "No hay internet",Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(), "Gestion OFFLINE exitosa.\nRecuerda sincronizar cuando tengas acceso a internet.",Toast.LENGTH_LONG).show();
+                            //Gestion gestion = new Gestion(local.getKey_id() + "", nombreNuevo, areaNuevo, catNuevo, subcatNuevo, bienNuevo, 0);
+                            //db.addGestion(gestion);
+                            //updateOnDB(nombreNuevo, areaNuevo, catNuevo, subcatNuevo, bienNuevo, observacion);
+                            //return true;
+                        }
+                        //return false;
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        System.out.println(anError);
+                    }
+                });
+
+        /*ConexionHTTP conexionHTTP = new ConexionHTTP();
         conexionHTTP.gestion(local.getIdLocal(), cc, local.getNombre(), nombreNuevo, local.getArea(), areaNuevo, local.getCodigoCategoria(), codigos.getCodigoCategoria(),
                 local.getCodigoSubcategoria(), codigos.getCodigoSubcategoria(), local.getCodigoBien(), codigos.getCodigoBien(), observacion);
         while (!conexionHTTP.isFinishProcess()) {
@@ -326,7 +381,7 @@ public class EditLocalActivity extends AppCompatActivity implements GestionDialo
             updateOnDB(nombreNuevo, areaNuevo, catNuevo, subcatNuevo, bienNuevo, observacion);
             return true;
         }
-        return false;
+        return false;*/
     }
 
     private void updateOnDB(String nombreNuevo, String areaNuevo, String categoriaNuevo, String subcategoriaNuevo, String bienNuevo, String observacion) {

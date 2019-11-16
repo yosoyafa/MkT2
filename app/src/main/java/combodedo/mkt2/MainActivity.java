@@ -10,6 +10,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONArrayRequestListener;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -18,6 +23,7 @@ import java.util.ArrayList;
 import model.Local;
 import utils.ConexionHTTP;
 import utils.DataBase;
+import utils.Links;
 import utils.LogicDataBase;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         db = new LogicDataBase(getApplicationContext());
         setContentView(R.layout.activity_main);
+        AndroidNetworking.initialize(getApplicationContext());
         setWidgets();
         setOnClick();
     }
@@ -51,47 +58,58 @@ public class MainActivity extends AppCompatActivity {
                 progress = ProgressDialog.show(MainActivity.this, "Descargando información de centros comerciales",
                         "Se están descargando los datos de tus centros comerciales", true);
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run()
-                    {
-                        try {
-                            int a = downloadCCs();
-                            if(a==1){
-                                MainActivity.this.runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        Toast.makeText(MainActivity.this, "Descarga completa",
-                                                Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            }else if(a==2){
-                                MainActivity.this.runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        Toast.makeText(MainActivity.this, "ERROR JSON",
-                                                Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            }else if(a==3){
-                                MainActivity.this.runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        Toast.makeText(MainActivity.this, "No se pudo realizar la descarga, revisa tu conexión a internet",
-                                                Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            }
-                        }catch(Exception e){
-                            e.printStackTrace();
-                        }
-
-                        runOnUiThread(new Runnable() {
+                String linkDescarga = new Links().getDownloadAllCCs();
+                AndroidNetworking.get(linkDescarga)
+                        .setPriority(Priority.HIGH)
+                        .build()
+                        .getAsJSONArray(new JSONArrayRequestListener() {
                             @Override
-                            public void run()
-                            {
+                            public void onResponse(JSONArray response) {
+                                //System.out.println(response);
+                                //Toast.makeText(MainActivity.this, "AN",Toast.LENGTH_LONG).show();
+
+                                if (response != null) {
+                                    db.resetLocalesComerciales();
+                                    try {
+                                        for (int a = 0; a < response.length(); a++) {
+                                            JSONObject row = response.getJSONObject(a);
+
+                                            String centroComercial = row.getString("centroComercial");
+                                            String numeroLocal = row.getString("local");
+                                            String area = row.getString("area");
+                                            String nombre = row.getString("comerciante");
+                                            String codigoCategoria = row.getString("codigoCategoria");
+                                            String codigoSubcategoria = row.getString("codigoSubcategoria");
+                                            String codigoBien = row.getString("tipoBienServicio");
+                                            String idLocal = row.getString("idLocal");
+                                            String gestionado = row.getString("gestionado");
+
+                                            Local local = new Local(idLocal,nombre,numeroLocal,area,codigoCategoria,codigoSubcategoria,codigoBien,centroComercial,gestionado);
+                                            db.addLocal(local);
+                                        }
+
+                                        Toast.makeText(MainActivity.this,
+                                                "Descarga completa",Toast.LENGTH_LONG).show();
+                                        //return 1;
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(MainActivity.this,
+                                                "Hubo un error procesando la información", Toast.LENGTH_LONG).show();
+                                        //return 2;
+                                    }
+                                } else {
+                                    Toast.makeText(MainActivity.this,
+                                            "No se pudo realizar la descarga, revisa tu conexión a internet",Toast.LENGTH_LONG).show();
+                                    //return 3;
+                                }
+
                                 progress.dismiss();
                             }
+                            @Override
+                            public void onError(ANError error) {
+                                // handle error
+                            }
                         });
-                    }
-                }).start();
             }
         });
 
@@ -113,54 +131,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "No hay centros comerciales disponibles, intenta descargandolos antes.",
                     Toast.LENGTH_LONG).show();
 
-        }
-    }
-
-    private int downloadCCs() {
-        ConexionHTTP conexion = new ConexionHTTP();
-        //ConexionHTTP conexion = new ConexionHTTP(sharedPreferences.getString("sede","-"));
-        conexion.downloadCCs("");
-        while (!conexion.isFinishProcess()) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        JSONArray respuesta = conexion.getResponseArray();
-        if (respuesta != null) {
-            db.resetLocalesComerciales();
-            try {
-                for (int a = 0; a < respuesta.length(); a++) {
-                    JSONObject row = respuesta.getJSONObject(a);
-
-                    String centroComercial = row.getString("centroComercial");
-                    String numeroLocal = row.getString("local");
-                    String area = row.getString("area");
-                    String nombre = row.getString("comerciante");
-                    String codigoCategoria = row.getString("codigoCategoria");
-                    String codigoSubcategoria = row.getString("codigoSubcategoria");
-                    String codigoBien = row.getString("tipoBienServicio");
-                    String idLocal = row.getString("idLocal");
-                    String gestionado = row.getString("gestionado");
-
-                    Local local = new Local(idLocal,nombre,numeroLocal,area,codigoCategoria,codigoSubcategoria,codigoBien,centroComercial,gestionado);
-                    db.addLocal(local);
-                }
-
-                //Toast.makeText(this, "Descarga completa",
-                //        Toast.LENGTH_LONG).show();
-                return 1;
-            } catch (Exception e) {
-                e.printStackTrace();
-                //Toast.makeText(this, "ERROR JSON",
-                //        Toast.LENGTH_LONG).show();
-                return 2;
-            }
-        } else {
-            //Toast.makeText(this, "No se pudo realizar la descarga, revisa tu conexión a internet",
-            //        Toast.LENGTH_LONG).show();
-            return 3;
         }
     }
 
