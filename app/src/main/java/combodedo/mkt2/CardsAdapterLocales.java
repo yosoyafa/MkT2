@@ -76,7 +76,7 @@ public class CardsAdapterLocales extends BaseAdapter {
 
         ImageView check = view.findViewById(R.id.check);
 
-        System.out.println("_______________________________\nlocal:\n"+local.toStringRaw());
+        //System.out.println("_______________________________\nlocal:\n"+local.toStringRaw());
 
         if(local.getGestionado().equals("0")){
             check.setVisibility(View.GONE);
